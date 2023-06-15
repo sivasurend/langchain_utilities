@@ -1,0 +1,32 @@
+import gspread
+from google.auth import service_account
+
+from langchain.llms import OpenAI
+from langchain import PromptTemplate
+
+openai_api_key="your key"
+
+llm = OpenAI(model_name="text-davinci-003", temperature=0,openai_api_key=openai_api_key)
+
+template = """
+Set your instructions here
+"""
+
+user_prompt = PromptTemplate(
+    input_variables=[""],
+    template=template,
+)
+
+final_prompt = user_prompt.format("")
+
+
+output = llm(final_prompt)
+
+scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+credentials = service_account.Credentials.from_service_account_file('credentials.json', scopes=scope)
+client = gspread.authorize(credentials)
+
+sheet_title = 'Workbook 1'
+sheet = client.open(sheet_title).sheet1
+
+sheet.update([{'values': data}])
