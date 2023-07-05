@@ -9,4 +9,4 @@ Some of these utilities are built on Streamlit and launched as MicroApps. Please
 
 2. ReactGPT (www.reactgpt.xyz)
 
-![ReactGPT Banner](.images/ReactGPT.png)
+![ReactGPT Banner](/images/ReactGPT.png)
