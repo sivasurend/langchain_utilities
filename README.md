@@ -5,7 +5,7 @@ Some of these utilities are built on Streamlit and launched as MicroApps. Please
 
 1. HeroGPT (www.hero-gpt.com)
 
-![HeroGPT Banner](./images/herogpt.png)
+![HeroGPT Banner](/images/HeroGPT.png)
 
 2. ReactGPT (www.reactgpt.xyz)
 
