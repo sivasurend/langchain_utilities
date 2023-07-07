@@ -7,23 +7,18 @@ import uuid
 from io import StringIO
 from tabulate import tabulate
 
-# Create your Streamlit app
 def main():
-    # Add a title
     st.title("CSV-GPT")
     st.write("Analyze your CSV file instantly")
 
-    # Initialize session state
     if 'uploaded' not in st.session_state:
         st.session_state.uploaded = False
         st.session_state.s3_file_path = None
 
-    # Streamlit file uploader
     uploaded_file = st.file_uploader("Upload a CSV file", type=['csv'])
 
     bucket_name = 'csv-gpt-uploads'
 
-    # Create an S3 client
     s3 = boto3.client(
         's3',
         aws_access_key_id=st.secrets.aws_access_key_id,
@@ -31,17 +26,12 @@ def main():
     )
 
     if uploaded_file is not None and not st.session_state.uploaded:
-        # read file, upload to S3, retrieve from S3
         df = pd.read_csv(uploaded_file)
-
-        # Create a unique file name
         file_name = f"{uuid.uuid4().hex}.csv"
 
-        # Use StringIO to prepare the in-memory text stream
         csv_buffer = StringIO()
         df.to_csv(csv_buffer)
 
-        # Write buffer contents to the S3 bucket
         s3.put_object(Body=csv_buffer.getvalue(), Bucket=bucket_name, Key=file_name)
 
         st.session_state.uploaded = True
